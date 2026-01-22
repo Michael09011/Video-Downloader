@@ -1,4 +1,6 @@
 # 🎬 Video Downloader
+<img width="749" height="710" alt="스크린샷 2026-01-22 135851" src="https://github.com/user-attachments/assets/9136598d-560a-440c-a329-3bc5b51de3cc" />
+
 
 > URL을 입력하면 동영상을 다운받을 수 있는 GUI 기반 프로그램
 
