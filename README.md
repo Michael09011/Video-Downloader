@@ -331,13 +331,6 @@ MIT License - 자유롭게 사용, 수정, 배포 가능
 
 ---
 
-## 📞 지원
-
-### 문제 해결
-- [업데이트 가이드](업데이트_가이드.md) 참조
-- [설정 가이드](setup_guide.md) 참조
-- [사용설명서](사용설명서.md) (한글)
-
 ### 관련 링크
 - **yt-dlp**: https://github.com/yt-dlp/yt-dlp
 - **Python**: https://www.python.org/
