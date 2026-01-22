@@ -23,6 +23,9 @@ class VideoDownloaderApp:
             except:
                 pass
         
+        # 현재 디렉토리에서 쿠키 파일 경로 설정 (Tver 등 인증이 필요한 사이트용)
+        self.cookies_file = os.path.join(os.path.dirname(__file__), "cookies.txt")
+        
         # 스타일 설정
         self.root.configure(bg="#f0f0f0")
         style = ttk.Style()
@@ -244,8 +247,15 @@ class VideoDownloaderApp:
                 "-o", os.path.join(download_path, "%(title)s.%(ext)s"),
                 "--progress-template", "[download] %(progress)s",
                 "--no-warnings",
-                url
+                "--user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
             ]
+            
+            # Tver 및 기타 인증이 필요한 사이트용 쿠키 파일 추가
+            if os.path.exists(self.cookies_file):
+                cmd.extend(["--cookies", self.cookies_file])
+            
+            # URL 추가
+            cmd.append(url)
             
             self.log(f"명령어: yt-dlp -f {format_str} [옵션] {url[:50]}...")
             self.log("다운로드를 시작합니다...\n")

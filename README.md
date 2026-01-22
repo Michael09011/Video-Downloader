@@ -12,7 +12,7 @@
 
 ### 🎯 핵심 기능
 - ✅ **간편한 URL 입력**: 다운로드할 동영상 URL 입력
-- ✅ **1000개 이상 사이트 지원**: YouTube, Vimeo, Instagram, TikTok 등
+- ✅ **1000개 이상 사이트 지원**: YouTube, Vimeo, Instagram, TikTok, **Tver** 등
 - ✅ **품질 선택**: best, 720p, 480p, 360p, audio (MP3)
 - ✅ **저장 경로 설정**: 원하는 폴더 선택
 
@@ -28,7 +28,9 @@
 - ✅ **✕ 취소**: 다운로드 강제 중단
 
 ### 🎨 사용자 인터페이스
-- ✅ **직관적 GUI**: tkinter 기반 깔끔한 인터페이스
+- ✅ **모던한 디자인**: PyQt6 기반 세련된 인터페이스
+- ✅ **다크 테마**: 눈에 편한 다크 테마 (라이트 테마 확장 가능)
+- ✅ **탭 기반 UI**: 다운로드와 설정을 깔끔하게 분리
 - ✅ **아이콘 적용**: 프로그램 윈도우에 아이콘 표시
 - ✅ **반응형 UI**: 백그라운드 스레드로 UI 반응성 유지
 
@@ -50,7 +52,10 @@ dist\VideoDownloader.exe
 ### 방법 2: 배치 파일로 실행
 
 ```bash
-# 자동으로 필요한 패키지 설치 후 실행
+# PyQt6 모던 UI 버전
+run_gui.bat
+
+# 또는 tkinter 레거시 버전
 run.bat
 ```
 
@@ -119,6 +124,7 @@ pip install -r requirements.txt
 pip install yt-dlp>=2024.1.1
 pip install Pillow>=10.0.0
 pip install pyinstaller>=6.0.0
+pip install PyQt6>=6.6.0
 ```
 
 ### 아이콘 생성 (선택사항)
@@ -132,11 +138,12 @@ python create_icon.py
 ## 🏗️ 프로젝트 구조
 
 ```
-Downloader/
+Video-Downloader/
 ├── dist/
-│   └── VideoDownloader.exe          # ⭐ 최종 실행 파일 (11MB)
+│   └── VideoDownloader.exe          # ⭐ 최종 실행 파일 (PyQt6 모던 UI)
 ├── 
-├── downloader.py                    # 메인 GUI 프로그램
+├── downloader_qt.py                 # PyQt6 메인 프로그램 (모던 UI)
+├── downloader.py                    # tkinter 레거시 버전
 ├── create_icon.py                   # 아이콘 생성 스크립트
 ├── build_exe.py                     # EXE 빌드 스크립트
 ├── 
@@ -144,14 +151,12 @@ Downloader/
 ├── icon.png                         # PNG 아이콘
 ├── 
 ├── requirements.txt                 # Python 의존성
-├── run.bat                          # 프로그램 실행 배치
+├── run_gui.bat                      # PyQt6 GUI 실행 배치 (권장)
+├── run.bat                          # tkinter 실행 배치
 ├── build_exe.bat                    # EXE 빌드 배치
 ├── 
 ├── README.md                        # 이 파일
-├── setup_guide.md                   # 설정 상세 가이드
-├── 사용설명서.md                    # 한글 사용 설명서
-├── 업데이트_가이드.md               # 신기능 설명
-└── 최종_완성_보고서.md              # 프로젝트 완성 현황
+└── cookies.txt                      # Tver 등 쿠키 저장 (자동 생성)
 ```
 
 ---
@@ -173,7 +178,7 @@ build_exe.bat
 ### PyInstaller로 직접 빌드
 
 ```bash
-pyinstaller --onefile --windowed --name VideoDownloader --icon=icon.ico downloader.py
+pyinstaller --onefile --windowed --name VideoDownloader --icon=icon.ico downloader_qt.py
 ```
 
 빌드 완료 후: `dist/VideoDownloader.exe` 생성
@@ -190,7 +195,19 @@ pyinstaller --onefile --windowed --name VideoDownloader --icon=icon.ico download
 3. 저장 경로: C:\Users\YourName\Downloads
 4. [다운로드 시작] 클릭
 ```
+### Tver 영상 다운로드
 
+```
+1. URL: https://tver.jp/... (Tver 영상 링크)
+2. 품질: best (또는 원하는 품질)
+3. 저장 경로: 선택
+4. [다운로드 시작] 클릭
+
+📝 주의사항:
+- Tver는 일본 내 서비스이므로 일본 IP 또는 VPN 필요할 수 있습니다
+- 로그인이 필요한 경우 브라우저에서 쿠키를 저장하고
+  프로그램 폴더에 cookies.txt 파일을 배치하면 자동으로 사용됩니다
+```
 ### 유튜브 음악 추출
 
 ```
@@ -291,16 +308,54 @@ yt-dlp -U
 | 항목 | 기술 |
 |------|------|
 | **언어** | Python 3.13 |
-| **GUI** | tkinter |
+| **GUI (현재)** | PyQt6 (모던 다크 테마) |
+| **GUI (레거시)** | tkinter |
 | **다운로드** | yt-dlp (YouTube-DL 개선판) |
 | **패키징** | PyInstaller |
 | **아이콘** | PIL/Pillow |
-| **스레드** | threading |
+| **스레드** | QThread (멀티 스레딩) |
 | **정규식** | re (진행률 파싱) |
 
 ---
 
+## 🌐 지원하는 사이트
+
+이 프로그램은 **yt-dlp**를 기반으로 하며, 1000개 이상의 사이트를 지원합니다.
+
+### 주요 지원 사이트
+- 🔴 **YouTube** - 최고 품질 지원
+- 🎬 **Vimeo**
+- 📱 **TikTok**
+- 📷 **Instagram**
+- 🇯🇵 **Tver** - 일본 온라인 동영상 서비스
+- 🎥 **Niconico**
+- 🎭 **Dailymotion**
+- 📺 그 외 수백 개 사이트
+
+### Tver 다운로드 팁
+- **VPN 필요**: 일본 IP 또는 VPN 서비스 사용
+- **로그인 필요한 경우**: 
+  1. 브라우저에서 Tver에 로그인
+  2. 개발자 도구(F12) → Storage → Cookies에서 쿠키 내용 복사
+  3. 프로그램 폴더에 `cookies.txt` 파일 생성 후 붙여넣기
+  4. 프로그램 재시작 후 다운로드
+
+---
+
 ## 📈 업데이트 이력
+
+### v2.0 (2026-01-22) ⭐ 새로운 디자인!
+- ✅ **PyQt6 기반 모던 UI** - 세련된 다크 테마 적용
+- ✅ **탭 기반 인터페이스** - 다운로드와 설정 분리
+- ✅ **향상된 시각성** - 그라디언트, 아이콘, 더 나은 레이아웃
+- ✅ **설정 패널** - 다운로드 완료 후 폴더 자동 열기 등
+- ✅ **QThread 사용** - 더 안정적인 멀티 스레딩
+
+### v1.2 (2026-01-22)
+- ✅ Tver 및 일본 스트리밍 사이트 지원 최적화
+- ✅ 쿠키 파일 지원 추가 (인증 필요 사이트용)
+- ✅ User-Agent 설정 개선
+- ✅ 사용자 에이전트 헤더 추가
 
 ### v1.1 (2026-01-22)
 - ✅ 진행바 백분율 실시간 표시

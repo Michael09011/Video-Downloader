@@ -2,10 +2,10 @@
 
 
 a = Analysis(
-    ['downloader.py'],
+    ['downloader_qt.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('C:\\Users\\USER\\Documents\\Git\\Video-Downloader\\icon.ico', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -35,5 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['icon.ico'],
+    icon=['C:\\Users\\USER\\Documents\\Git\\Video-Downloader\\icon.ico'],
 )
